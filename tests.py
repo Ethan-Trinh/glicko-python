@@ -14,6 +14,7 @@ def main():
         if user_input == 'exit': break
         elif user_input == 'player': Player.run_test()
         elif user_input == 'file': File.run_test()
+        elif user_input == "c": glicko.run_solve_for_c()
 
 if __name__ == '__main__':
     main()

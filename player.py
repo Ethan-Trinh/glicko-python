@@ -18,22 +18,17 @@ class Player:
     def __repr__(self):
         return f'{self.name}: Rank = {self.rank}, Rating Periods = {self.t}, Rating Deviation = {self.rd}'
 
-# Methods for changing rd, t and rank
+# Methods for changing name, rank, t, rd
     def change_name(self, name): self.name = name
-    def change_rd(self, rd): self.rd = rd
-    def change_t(self, t): self.t = t
     def change_rank(self, rank): self.rank = rank
+    def change_t(self, t): self.t = t
+    def change_rd(self, rd): self.rd = rd
 
 # Assuming that it would take 100 rating periods for a player's
 # rating deviation to return to the initial 350 & that an average
 # rating deviation of 50
 
 # c = sqrt( (350**2 - 50**2) / 100 ) ~~ 34.6
-
-#TODO: Add a feature that takes the average RD of all players and
-# solve for c using the variable avg_rd
-    def solve_for_c():
-        pass
     
     # RD = sqrt([old_RD]^2 + c^2 * t)
     def onset_ratings_deviation(self):
@@ -53,5 +48,5 @@ class Player:
     @staticmethod
     def run_test():
         pl = Player('John P', 1500, 3, 50)
-        pl.onset_ratings_deviation()
+        #pl.onset_ratings_deviation()
         print(f'{pl}')

@@ -11,8 +11,7 @@ class File:
         return player_list
 
     def run_test():
-        #file = File.load_players
-        file = File.load_players('players.csv')
+        player_list = File.load_players('players.csv')
 
-        for obj in file:
+        for obj in player_list:
             print(obj)
