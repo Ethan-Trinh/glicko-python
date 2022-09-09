@@ -24,22 +24,15 @@ class Player:
     def change_t(self, t): self.t = t
     def change_rd(self, rd): self.rd = rd
 
-# Assuming that it would take 100 rating periods for a player's
-# rating deviation to return to the initial 350 & that an average
-# rating deviation of 50
-
-# c = sqrt( (350**2 - 50**2) / 100 ) ~~ 34.6
+# Assuming that it would take 100 rating periods for a player's rating deviation to return to the initial 350 & that an average rating deviation of 50
     
     # RD = sqrt([old_RD]^2 + c^2 * t)
     def onset_ratings_deviation(self):
         c = 34.6
         new_rd = math.sqrt( (self.rd**2) + c**2 * self.t )
+        new_rd = round(new_rd) # Round the float value to nearst whole integer
 
-    # Round the float value to nearst whole integer
-        new_rd = round(new_rd)
-
-    # Since 350 is the max rd, any Rd above 350 exceeds the maximum rd
-    # will be replaecd with 350 instead
+# Since 350 is the max rd, any Rd above 350 exceeds the maximum rd and will be replaecd with 350 instead
         if new_rd >= 350:
             self.change_rd(350)
         elif new_rd < 350:

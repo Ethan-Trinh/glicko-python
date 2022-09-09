@@ -20,16 +20,10 @@ class File:
                 current_row = [obj.name, obj.rank, obj.t, obj.rd]
                 csv_write.writerow(current_row)
 
-#        file_obj = open(file_name, 'w')
-#        csv_write = csv.writer(file_obj)
-#        csv_write.writerow(heading)
-
-#        for obj in player_list:
-#            current_row = [obj.name, obj.rank, obj.t, obj.rd]
-#            csv_write.writerow(current_row)
-
-#        file_obj.close()
-
+    def find_player(player_list, target_player):
+        for obj in player_list:
+            if target_player == obj.name: return obj # if player is found, return the player object
+        print("Could not find player.")
 
     def run_load_test():
         player_list = File.load_players('players.csv')
@@ -37,7 +31,13 @@ class File:
         for obj in player_list:
             print(obj)
 
-
     def run_save_test():
         player_list = File.load_players('players.csv')
         File.save_players('test.csv', player_list)
+        print("Saved to test.csv")
+
+    def run_find_test():
+        player_list = File.load_players('players.csv')
+        user_input = input("\nEnter the name of the player you wish to find: ") 
+        target_player = File.find_player(player_list, user_input)
+        print(f'{target_player}')
