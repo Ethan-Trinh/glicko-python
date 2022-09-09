@@ -9,15 +9,17 @@ import math
 # Rating Deviations (RD), number of rating periods (t), Glicko_Rank (rank)
 # New players will start with a RD = 350, t = 0, rank = 1500
 class Player:
-    def __init__(self, rd, t, rank):
+    def __init__(self, name, rank, t, rd):
+        self.name = name
+        self.rank = rank
         self.rd = rd
         self.t = t
-        self.rank = rank
     
     def __repr__(self):
-        return f'Player rd = {self.rd}, t = {self.t}, rank = {self.rank}'
+        return f'{self.name}: Rank = {self.rank}, Rating Periods = {self.t}, Rating Deviation = {self.rd}'
 
 # Methods for changing rd, t and rank
+    def change_name(self, name): self.name = name
     def change_rd(self, rd): self.rd = rd
     def change_t(self, t): self.t = t
     def change_rank(self, rank): self.rank = rank
@@ -37,7 +39,12 @@ class Player:
     def onset_ratings_deviation(self):
         c = 34.6
         new_rd = math.sqrt( (self.rd**2) + c**2 * self.t )
-        
+
+    # Round the float value to nearst whole integer
+        new_rd = round(new_rd)
+
+    # Since 350 is the max rd, any Rd above 350 exceeds the maximum rd
+    # will be replaecd with 350 instead
         if new_rd >= 350:
             self.change_rd(350)
         elif new_rd < 350:
@@ -45,12 +52,6 @@ class Player:
 
     @staticmethod
     def run_test():
-        pl = Player(120, 1, 1500)
+        pl = Player('John P', 1500, 3, 50)
         pl.onset_ratings_deviation()
-        print(f'Testing : {pl}')
-
-def main():
-    Player.run_test()
-
-if __name__ == '__main__':
-    main()
+        print(f'{pl}')

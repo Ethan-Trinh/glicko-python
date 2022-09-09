@@ -7,3 +7,8 @@ class glicko:
 # Player Class object will pass the required information for calculating rank
     def calculate_new_ranks():
         pass
+
+    def solve_for_c():
+        players = []
+
+        
