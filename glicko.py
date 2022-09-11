@@ -38,7 +38,7 @@ class glicko:
 
         c = glicko.solve_for_c(player_list)
 
-        new_rd = math.sqrt( (player.rd**2) + c**2 * player.t )
+        new_rd = math.sqrt((player.rd**2) + c**2 * float(player.t))
         new_rd = round(new_rd) # Round the float value to nearst whole integer
 
 # Since 350 is the max rd, any Rd above 350 exceeds the maximum rd and will be replaecd with 350 instead
@@ -46,6 +46,21 @@ class glicko:
             player.change_rd(350)
         elif new_rd < 350:
             player.change_rd(new_rd)
+
+# Step 2: calculate g based on opponent's onset RD.
+# g = 1/sqrt( [1 + 3 (q**2) (RD**2)] / pi**2 )
+# constant q = log(e) [10 / 400] == 0.0058565
+# Then E can be caluclated by: E = 1 / (1 + 10^(-g(pr - or)/400))
+# where pr == player rating
+#       or == opponent's rating
+
+    def solve_for_g(opponent):
+        q = 0.0058565
+        pi = math.pi
+        denom = (1 + (3 * (q**2)) * (opponent.rd)**2) / pi**2
+        g = 1 / denom
+        return g
+
     
     def run_solve_for_c():
         player_list = File.load_players('players.csv')
@@ -57,4 +72,13 @@ class glicko:
     
     def run_rd_test():
         player_list = File.load_players('players.csv')
-        
+        pl = Player('John P', 1500, 3, 50)
+        print(f'{pl}')
+        glicko.onset_ratings_deviation(player_list, pl)
+        print(f'{pl}')
+
+    def run_solve_for_g():
+        pl = Player('John P', 1500, 3, 50)
+        print(f'{pl}')
+        g = glicko.solve_for_g(pl)
+        print(f'{g}')

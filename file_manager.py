@@ -23,7 +23,6 @@ class File:
     def find_player(player_list, target_player):
         for obj in player_list:
             if target_player == obj.name: return obj # if player is found, return the player object
-        print("Could not find player.")
 
     def run_load_test():
         player_list = File.load_players('players.csv')

@@ -43,3 +43,18 @@ class Player:
         pl = Player('John P', 1500, 3, 50)
         #pl.onset_ratings_deviation()
         print(f'{pl}')
+
+    # def onset_ratings_deviation(self):
+    #    c = 34.6
+    #    new_rd = math.sqrt( (self.rd**2) + c**2 * self.t )
+
+
+    # Round the float value to nearst whole integer
+    #    new_rd = round(new_rd)
+
+    # Since 350 is the max rd, any Rd above 350 exceeds the maximum rd
+    # will be replaecd with 350 instead
+    #    if new_rd >= 350:
+    #        self.change_rd(350)
+    #    elif new_rd < 350:
+    #        self.change_rd(new_rd)
