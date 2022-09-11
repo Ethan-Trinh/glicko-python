@@ -23,6 +23,8 @@ def main():
 #glicko.py functions
         elif user_input == "c": glicko.run_solve_for_c()
         elif user_input == 'g': glicko.run_solve_for_g()
+        elif user_input == 'ng': glicko.run_solve_for_neg_g()
+        elif user_input == 'e': glicko.run_solve_for_E()
         elif user_input == "rd": glicko.run_rd_test()
 
 if __name__ == '__main__':

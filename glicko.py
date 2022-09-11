@@ -61,6 +61,18 @@ class glicko:
         g = 1 / denom
         return g
 
+    def negative_g(g):
+        g = -g
+        return g
+
+    def solve_for_E(player1, player2):
+        g = glicko.solve_for_g(player2)
+        g = glicko.negative_g(g)
+
+        rank_difference = (player1.rank - player2.rank)
+
+        E = 1 / (1 + 10^((g * rank_difference) / 400 ))
+        return E
     
     def run_solve_for_c():
         player_list = File.load_players('players.csv')
@@ -81,4 +93,19 @@ class glicko:
         pl = Player('John P', 1500, 3, 50)
         print(f'{pl}')
         g = glicko.solve_for_g(pl)
-        print(f'{g}')
+        print(f'g: {g}')
+    
+    def run_solve_for_neg_g():
+        pl = Player('John P', 1500, 3, 50)
+        print(f'{pl}')
+        g = glicko.solve_for_g(pl)
+        print(f'g: {g}')
+        g = glicko.negative_g(g)
+        print(f'negitive g: {g}')
+
+    def run_solve_for_E():
+        pl1 = Player('John P', 1500, 3, 50)
+        pl2 = Player('Jeff L', 1400, 0, 43)
+        print(f'{pl1}\n{pl2}')
+        E = glicko.solve_for_E(pl1, pl2)
+        print(f'E: {E}')
