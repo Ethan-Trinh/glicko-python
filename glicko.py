@@ -39,7 +39,7 @@ class glicko:
         c = glicko.solve_for_c(player_list)
 
         new_rd = math.sqrt((player.rd**2) + c**2 * float(player.t))
-        new_rd = round(new_rd) # Round the float value to nearst whole integer
+        #new_rd = round(new_rd) # Round the float value to nearst whole integer
 
 # Since 350 is the max rd, any Rd above 350 exceeds the maximum rd and will be replaecd with 350 instead
         if new_rd >= 350:
@@ -81,6 +81,21 @@ class glicko:
         q = 0.0057565
         d_squared = 1 / ((q**2)*(g**2)*(e)*(1 - e))
         return d_squared
+
+    def new_RD(player, d_squared):
+        new_rd = 1 / math.sqrt((1/(player.rd)**2) + (1/(d_squared)))
+
+        if new_rd >= 350:
+            player.change_rd(350)
+        elif new_rd < 350:
+            player.change_rd(new_rd)
+
+# Lastly, to calculate the ranks we need:
+# S == result of the game (0 == loss, 0.5 == draw, 1 == win)
+# The new rank is calculated with: r_post == r_pre + q*(new_rd**2)*g*(S-E)
+
+
+
 
 # Test functions for each function in the class
 # All of these functions are called in test.py
@@ -131,4 +146,19 @@ class glicko:
         print(f'E: {e}')
         d_squared = glicko.solve_for_d_squared(pl1, g, e)
         print(f'D**2: {d_squared}')
+
+
+    def run_solve_for_new_rd():
+        pl1 = Player('John P', 1500, 3, 50)
+        pl2 = Player('Jeff L', 1400, 0, 43)
+        print(f'Player 1: {pl1}\nPlayer 2: {pl2}')
+        print(f'{pl1}\n{pl2}')
+        g = glicko.solve_for_g(pl1)
+        print(f'g: {g}')
+        e = glicko.solve_for_E(pl1, pl2)
+        print(f'E: {e}')
+        d_squared = glicko.solve_for_d_squared(pl1, g, e)
+        print(f'D**2: {d_squared}')
+        glicko.new_RD(pl1, d_squared)
+        print(f'{pl1}\n{pl2}')
         
