@@ -71,7 +71,7 @@ class glicko:
 
         rank_difference = (player1.rank - player2.rank)
 
-        E = 1 / (1 + 10^((g * rank_difference) / 400 ))
+        E = 1 / (1 + 10**((g * rank_difference) / 400 ))
         return E
     
     def run_solve_for_c():
