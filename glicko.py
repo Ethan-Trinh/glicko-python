@@ -94,8 +94,11 @@ class glicko:
 # S == result of the game (0 == loss, 0.5 == draw, 1 == win)
 # The new rank is calculated with: r_post == r_pre + q*(new_rd**2)*g*(S-E)
 
-
-
+    def solve_for_new_rank(player, g, s, e):
+        q = 0.0057565
+        r_post = player.rank + q*(player.rd**2)*g*(s - e)
+        
+        player.change_rank(r_post)
 
 # Test functions for each function in the class
 # All of these functions are called in test.py
@@ -162,3 +165,24 @@ class glicko:
         glicko.new_RD(pl1, d_squared)
         print(f'{pl1}\n{pl2}')
         
+    def run_glicko_test():
+        pl1 = Player('John P', 1500, 3, 50)
+        pl2 = Player('Jeff L', 1400, 0, 43)
+        print(f'Player 1: {pl1}\nPlayer 2: {pl2}')
+        print(f'{pl1}\n{pl2}')
+        g = glicko.solve_for_g(pl1)
+        print(f'g: {g}')
+        e = glicko.solve_for_E(pl1, pl2)
+        print(f'E: {e}')
+        d_squared = glicko.solve_for_d_squared(pl1, g, e)
+        print(f'D**2: {d_squared}')
+        glicko.new_RD(pl1, d_squared)
+        print(f'{pl1}')
+        s = int(input("\nEnter Result (0 == lose, 0.5 == draw, 1 == win: ) "))
+        if s > 1: 
+            print("Invalid Input") 
+        elif s < 0:
+            print("Invalid Input")
+        else:
+            glicko.solve_for_new_rank(pl1, g, s, e)
+        print(f'{pl1}')

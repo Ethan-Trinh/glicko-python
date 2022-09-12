@@ -28,6 +28,7 @@ def main():
         elif user_input == 'rd': glicko.run_rd_test()
         elif user_input == 'd**2': glicko.run_solve_for_d_squared()
         elif user_input == 'nrd': glicko.run_solve_for_new_rd()
+        elif user_input == 'rank': glicko.run_glicko_test()
 
 if __name__ == '__main__':
     main()
