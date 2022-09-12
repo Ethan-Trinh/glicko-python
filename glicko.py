@@ -65,8 +65,8 @@ class glicko:
         g = -g
         return g
 
-    def solve_for_E(player1, player2):
-        g = glicko.solve_for_g(player2)
+    def solve_for_E(player1, player2, g):
+        #g = glicko.solve_for_g(player2)
         g = glicko.negative_g(g)
 
         rank_difference = (player1.rank - player2.rank)
@@ -99,6 +99,25 @@ class glicko:
         r_post = player.rank + q*(player.rd**2)*g*(s - e)
         
         player.change_rank(r_post)
+
+    def run(player_list, player, opponent, result):
+    # 1st Find onset_RD for both players
+        glicko.onset_ratings_deviation(player_list, player)
+        glicko.onset_ratings_deviation(player_list, opponent)
+
+    # Next, solve for g using opponent's onset_RD
+        g = glicko.solve_for_g(opponent)
+
+    # After, we need to solve for E
+        e = glicko.solve_for_E(player, opponent, g)
+
+    # Then we find the new RD by first finding d**2
+        d_squared = glicko.solve_for_d_squared(player, g, e)
+        glicko.run_solve_for_new_rd(player, d_squared)
+
+    # Finally, Calculate the rank s == result of the game
+        glicko.solve_for_new_rank(player, g, result, e)
+
 
 # Test functions for each function in the class
 # All of these functions are called in test.py
@@ -149,7 +168,6 @@ class glicko:
         print(f'E: {e}')
         d_squared = glicko.solve_for_d_squared(pl1, g, e)
         print(f'D**2: {d_squared}')
-
 
     def run_solve_for_new_rd():
         pl1 = Player('John P', 1500, 3, 50)
