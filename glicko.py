@@ -49,13 +49,13 @@ class glicko:
 
 # Step 2: calculate g based on opponent's onset RD.
 # g = 1/sqrt( [1 + 3 (q**2) (RD**2)] / pi**2 )
-# constant q = log(e) [10 / 400] == 0.0058565
+# constant q = ln(10) / 400 == 0.0057565...
 # Then E can be caluclated by: E = 1 / (1 + 10^(-g(pr - or)/400))
 # where pr == player rating
 #       or == opponent's rating
 
     def solve_for_g(opponent):
-        q = 0.0058565
+        q = 0.0057565
         pi = math.pi
         denom = (1 + (3 * (q**2)) * (opponent.rd)**2) / pi**2
         g = 1 / denom
@@ -71,9 +71,19 @@ class glicko:
 
         rank_difference = (player1.rank - player2.rank)
 
-        E = 1 / (1 + 10**((g * rank_difference) / 400 ))
-        return E
-    
+        e = 1 / (1 + 10**((g * rank_difference) / 400 ))
+        return e
+
+# After the previous steps, new_RD is found with these 2 formulas
+# d**2 == 1 / (q**2 g**2 E (1 - E))
+
+    def solve_for_d_squared(player, g, e):
+        q = 0.0057565
+        d_squared = 1 / ((q**2)*(g**2)*(e)*(1 - e))
+        return d_squared
+
+# Test functions for each function in the class
+# All of these functions are called in test.py
     def run_solve_for_c():
         player_list = File.load_players('players.csv')
         average_rd = glicko.find_average_rd(player_list)
@@ -107,5 +117,18 @@ class glicko:
         pl1 = Player('John P', 1500, 3, 50)
         pl2 = Player('Jeff L', 1400, 0, 43)
         print(f'{pl1}\n{pl2}')
-        E = glicko.solve_for_E(pl1, pl2)
-        print(f'E: {E}')
+        e = glicko.solve_for_E(pl1, pl2)
+        print(f'E: {e}')
+
+    def run_solve_for_d_squared():
+        pl1 = Player('John P', 1500, 3, 50)
+        pl2 = Player('Jeff L', 1400, 0, 43)
+        print(f'Player 1: {pl1}\nPlayer 2: {pl2}')
+        print(f'{pl1}\n{pl2}')
+        g = glicko.solve_for_g(pl1)
+        print(f'g: {g}')
+        e = glicko.solve_for_E(pl1, pl2)
+        print(f'E: {e}')
+        d_squared = glicko.solve_for_d_squared(pl1, g, e)
+        print(f'D**2: {d_squared}')
+        

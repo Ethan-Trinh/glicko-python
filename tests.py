@@ -26,6 +26,7 @@ def main():
         elif user_input == 'ng': glicko.run_solve_for_neg_g()
         elif user_input == 'e': glicko.run_solve_for_E()
         elif user_input == "rd": glicko.run_rd_test()
+        elif user_input == "d**2": glicko.run_solve_for_d_squared()
 
 if __name__ == '__main__':
     main()
