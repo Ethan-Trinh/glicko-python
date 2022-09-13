@@ -22,7 +22,9 @@ class File:
 
     def find_player(player_list, target_player):
         for obj in player_list:
-            if target_player == obj.name: return obj # if player is found, return the player object
+            if target_player == obj.name: 
+                target_player = Player(obj.name, obj.rank, obj.t, obj.rd)
+                return target_player # if player is found, return the player object
         #return target_player in player_list
 
     def run_load_test():
