@@ -38,7 +38,7 @@ class glicko:
 
         c = glicko.solve_for_c(player_list)
 
-        new_rd = math.sqrt((player.rd**2) + c**2 * float(player.t))
+        new_rd = math.sqrt((float(player.rd)**2) + c**2 * float(player.t))
         #new_rd = round(new_rd) # Round the float value to nearst whole integer
 
 # Since 350 is the max rd, any Rd above 350 exceeds the maximum rd and will be replaecd with 350 instead
