@@ -1,3 +1,4 @@
+from player import Player
 from file_manager import File
 from glicko import glicko
 
@@ -8,8 +9,8 @@ def main():
     user_input_2 = input('Enter the name of their opponent: ')
 
 # Find the two players in the list
-    player1 = File.find_player(user_input_1)
-    player2 = File.find_player(user_input_2)
+    player1 = File.find_player(player_list, user_input_1)
+    player2 = File.find_player(player_list, user_input_2)
 
 # Prompt the user for the result & calculate the new ranks
     user_input_result = input('Who won the game?')
