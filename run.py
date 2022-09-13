@@ -1,6 +1,8 @@
 from file_manager import File
 from glicko import glicko
 
+# This function performs the action where the user can see the rank changes when
+# The user enters the name of two players and who won.
 def main():
 # Load the player list and ask user for the two players that are playing
     player_list = File.load_players('test.csv')
@@ -29,8 +31,8 @@ def main():
     glicko.run(player_list, player2, player1, result2)
 
 # Because the players just played a game, their rating periods since their last game == 0
-    player1.change_t(0)
-    player2.change_t(0)
+    player1.change_t(1)
+    player2.change_t(1)
 
     print(f'Player 1: {player1}\nPlayer 2: {player2}')
 
