@@ -69,7 +69,7 @@ class glicko:
         #g = glicko.solve_for_g(player2)
         g = glicko.negative_g(g)
 
-        rank_difference = (player1.rank - player2.rank)
+        rank_difference = (int(player1.rank) - int(player2.rank))
 
         e = 1 / (1 + 10**((g * rank_difference) / 400 ))
         return e
@@ -96,8 +96,7 @@ class glicko:
 
     def solve_for_new_rank(player, g, s, e):
         q = 0.0057565
-        r_post = player.rank + q*(player.rd**2)*g*(s - e)
-        
+        r_post = round(float(player.rank) + q*(float(player.rd)**2)*g*(float(s) - float(e)))
         player.change_rank(r_post)
 
     def run(player_list, player, opponent, result):
@@ -113,7 +112,7 @@ class glicko:
 
     # Then we find the new RD by first finding d**2
         d_squared = glicko.solve_for_d_squared(player, g, e)
-        glicko.run_solve_for_new_rd(player, d_squared)
+        glicko.new_RD(player, d_squared)
 
     # Finally, Calculate the rank s == result of the game
         glicko.solve_for_new_rank(player, g, result, e)

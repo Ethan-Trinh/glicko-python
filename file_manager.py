@@ -26,6 +26,18 @@ class File:
                 target_player = Player(obj.name, obj.rank, obj.t, obj.rd)
                 return target_player # if player is found, return the player object
         #return target_player in player_list
+    
+    def update_list(player_list, player1, player2):
+        for obj in player_list:
+            if obj.name == player1.name:
+                obj.rank = player1.rank
+                obj.t = player1.t
+                obj.rd = player1.rd
+            
+            if obj.name == player2.name:
+                obj.rank = player2.rank
+                obj.t = player2.t
+                obj.rd = player2.rd
 
     def run_load_test():
         player_list = File.load_players('players.csv')
